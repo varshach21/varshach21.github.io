@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Varsha Chebolu — Cybersecurity Analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F5F7FA;
+    --panel:#FFFFFF;
+    --panel-2:#EEF2F6;
+    --line:#DCE3EA;
+    --ink:#182333;
+    --muted:#5B6B7D;
+    --navy:#1E3A5F;
+    --signal:#2A6F6D;
+    --alert:#B4462F;
+    --ok:#2F7A55;
+    --mono:'IBM Plex Mono', monospace;
+    --sans:'IBM Plex Sans', sans-serif;
+    --display:'Space Grotesk', sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;}
+  a{color:inherit;}
+  ::selection{background:var(--signal);color:#fff;}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 28px;}
+
+  .topbar{position:sticky;top:0;z-index:50;background:rgba(245,247,250,0.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .topbar-inner{max-width:1040px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:13px;}
+  .topbar .brand{color:var(--ink);letter-spacing:0.02em;font-weight:600;}
+  .topbar .brand span{color:var(--signal);}
+  .topbar nav a{margin-left:22px;color:var(--muted);text-decoration:none;font-size:12.5px;letter-spacing:0.03em;}
+  .topbar nav a:hover{color:var(--signal);}
+  @media (max-width:680px){ .topbar nav{display:none;} }
+
+  .hero{padding:80px 0 44px;border-bottom:1px solid var(--line);}
+  .eyebrow{font-family:var(--mono);font-size:12.5px;color:var(--signal);letter-spacing:0.14em;text-transform:uppercase;display:flex;align-items:center;gap:10px;margin-bottom:22px;}
+  .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--signal);box-shadow:0 0 0 3px rgba(42,111,109,0.15);}
+  h1.name{font-family:var(--display);font-weight:700;font-size:clamp(38px,6.5vw,62px);line-height:1.04;margin:0 0 16px;letter-spacing:-0.01em;color:var(--navy);}
+  .role{font-family:var(--sans);font-weight:400;font-size:clamp(17px,2.2vw,19px);color:var(--muted);max-width:660px;margin:0 0 30px;}
+  .role strong{color:var(--ink);font-weight:600;}
+  .hero-links{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:40px;}
+  .pill-link{font-family:var(--mono);font-size:12.5px;color:var(--ink);border:1px solid var(--line);padding:9px 16px;border-radius:3px;text-decoration:none;transition:border-color .15s,color .15s;background:var(--panel);}
+  .pill-link:hover{border-color:var(--signal);color:var(--signal);}
+
+  .ticker-frame{border:1px solid var(--line);border-radius:5px;background:var(--panel);overflow:hidden;}
+  .ticker-head{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:0.05em;}
+  .ticker-head .dot{width:7px;height:7px;border-radius:50%;background:var(--ok);}
+  .ticker-body{height:130px;overflow:hidden;position:relative;
+    mask-image:linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
+    -webkit-mask-image:linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);}
+  .ticker-scroll{position:absolute;top:0;left:0;width:100%;animation:scrollUp 16s linear infinite;font-family:var(--mono);font-size:12.5px;}
+  .ticker-scroll div{padding:6px 14px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .ticker-scroll .lvl-alert{color:var(--alert);}
+  .ticker-scroll .lvl-info{color:var(--muted);}
+  .ticker-scroll .lvl-ok{color:var(--ok);}
+  .ticker-scroll span.tag{color:var(--ink);}
+  @keyframes scrollUp{0%{transform:translateY(0);}100%{transform:translateY(-50%);}}
+  @media (prefers-reduced-motion: reduce){.ticker-scroll{animation:none;}}
+
+  section{padding:64px 0;border-bottom:1px solid var(--line);}
+  section:last-of-type{border-bottom:none;}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:30px;}
+  .sec-num{font-family:var(--mono);color:var(--signal);font-size:13px;}
+  h2.sec-title{font-family:var(--display);font-weight:600;font-size:25px;margin:0;letter-spacing:-0.01em;color:var(--navy);}
+  .sec-sub{font-family:var(--mono);font-size:12px;color:var(--muted);margin-left:auto;letter-spacing:0.04em;}
+
+  /* about */
+  .about-text{max-width:700px;font-size:15.5px;color:var(--ink);}
+  .about-text p{margin:0 0 16px;}
+  .about-text strong{color:var(--navy);}
+
+  /* toolset */
+  .tool-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
+  @media (max-width:720px){.tool-grid{grid-template-columns:1fr;}}
+  .tool-card{border:1px solid var(--line);border-radius:5px;padding:20px 22px;background:var(--panel);}
+  .tool-card h3{font-family:var(--mono);font-size:12px;color:var(--signal);text-transform:uppercase;letter-spacing:0.08em;margin:0 0 14px;}
+  .chip-row{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{font-family:var(--mono);font-size:12px;color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:5px 10px;background:var(--panel-2);}
+
+  /* case files */
+  .case{border:1px solid var(--line);border-radius:6px;background:var(--panel);margin-bottom:22px;overflow:hidden;box-shadow:0 1px 2px rgba(24,35,51,0.03);}
+  .case-top{display:flex;align-items:center;justify-content:space-between;padding:14px 22px;border-bottom:1px solid var(--line);background:var(--panel-2);font-family:var(--mono);font-size:12px;color:var(--muted);}
+  .case-top .id{color:var(--signal);letter-spacing:0.04em;font-weight:600;}
+  .sev{padding:3px 10px;border-radius:3px;border:1px solid var(--line);font-size:10.5px;letter-spacing:0.06em;background:var(--panel);}
+  .sev-high{color:var(--alert);border-color:rgba(180,70,47,0.35);}
+  .sev-med{color:var(--signal);border-color:rgba(42,111,109,0.35);}
+  .sev-info{color:var(--ok);border-color:rgba(47,122,85,0.35);}
+  .case-body{padding:24px 24px 26px;}
+  .case-body h3{font-family:var(--display);font-size:19px;font-weight:600;margin:0 0 4px;color:var(--navy);}
+  .case-tagline{font-family:var(--sans);font-size:13.5px;color:var(--signal);margin:0 0 16px;font-style:italic;}
+  .case-block{margin-bottom:16px;}
+  .case-block:last-child{margin-bottom:0;}
+  .case-block .lbl{font-family:var(--mono);font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:6px;}
+  .case-block p{margin:0;font-size:14px;color:var(--ink);max-width:700px;}
+  .case-block ol, .case-block ul{margin:0;padding-left:20px;font-size:14px;color:var(--ink);}
+  .case-block li{margin-bottom:6px;}
+  .case-block li:last-child{margin-bottom:0;}
+  .case-meta-row{display:flex;flex-wrap:wrap;gap:22px;margin-bottom:4px;}
+  .case-meta-row div{font-family:var(--mono);font-size:12px;margin-right:22px;margin-bottom:8px;}
+  .case-meta-row .k{color:var(--muted);display:block;margin-bottom:4px;text-transform:uppercase;font-size:10.5px;letter-spacing:0.06em;}
+  .case-meta-row .v{color:var(--ink);}
+  .tactic-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px;}
+  .tactic-tags span{font-family:var(--mono);font-size:10.5px;color:var(--muted);border:1px dashed var(--line);border-radius:3px;padding:3px 8px;}
+  .skills-demo{display:flex;flex-wrap:wrap;gap:7px;}
+  .skills-demo span{font-family:var(--mono);font-size:11px;color:var(--navy);background:var(--panel-2);border:1px solid var(--line);border-radius:3px;padding:4px 9px;}
+
+  /* timeline */
+  .timeline{position:relative;padding-left:26px;}
+  .timeline::before{content:"";position:absolute;left:5px;top:6px;bottom:6px;width:1px;background:var(--line);}
+  .t-item{position:relative;padding-bottom:30px;}
+  .t-item:last-child{padding-bottom:0;}
+  .t-item::before{content:"";position:absolute;left:-26px;top:4px;width:9px;height:9px;border-radius:50%;background:var(--panel);border:2px solid var(--signal);}
+  .t-date{font-family:var(--mono);font-size:11.5px;color:var(--signal);letter-spacing:0.04em;margin-bottom:4px;}
+  .t-role{font-family:var(--display);font-weight:600;font-size:16.5px;margin-bottom:3px;color:var(--navy);}
+  .t-org{font-family:var(--sans);font-size:13.5px;color:var(--muted);margin-bottom:10px;}
+  .t-item p.t-context{font-size:13.5px;color:var(--ink);margin:0 0 8px;max-width:640px;}
+  .t-item ul{margin:0;padding-left:18px;color:var(--muted);font-size:13.5px;}
+  .t-item li{margin-bottom:5px;}
+
+  /* pubs / certs */
+  .pub{border-left:2px solid var(--line);padding:4px 0 4px 18px;margin-bottom:22px;}
+  .pub:last-child{margin-bottom:0;}
+  .pub .venue{font-family:var(--mono);font-size:11px;color:var(--signal);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px;}
+  .pub h3{font-family:var(--display);font-size:16.5px;font-weight:600;margin:0 0 6px;color:var(--navy);}
+  .pub p{margin:0;color:var(--muted);font-size:13.5px;}
+  .cert-row{display:flex;flex-wrap:wrap;gap:10px;}
+  .cert{font-family:var(--mono);font-size:12.5px;color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:8px 14px;background:var(--panel);}
+
+  footer{padding:52px 0 60px;}
+  .foot-grid{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px;}
+  .foot-left h2{font-family:var(--display);font-size:24px;margin:0 0 8px;color:var(--navy);}
+  .foot-left p{color:var(--muted);font-size:14px;margin:0;max-width:420px;}
+  .foot-links{display:flex;flex-direction:column;gap:8px;font-family:var(--mono);font-size:13px;}
+  .foot-links a{text-decoration:none;color:var(--ink);}
+  .foot-links a:hover{color:var(--signal);}
+  .foot-bottom{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-family:var(--mono);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">VC<span>/</span>SOC-DFIR</div>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#toolset">Toolset</a>
+      <a href="#cases">Case Files</a>
+      <a href="#experience">Experience</a>
+      <a href="#research">Research</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="eyebrow">Case File // Analyst Profile</div>
+    <h1 class="name">Varsha Chebolu</h1>
+    <p class="role">Cybersecurity analyst focused on <strong>SOC operations, digital forensics, and threat detection</strong> — hands-on with SIEM triage, malware analysis, and incident investigation across enterprise-style security labs.</p>
+    <div class="hero-links">
+      <a class="pill-link" href="mailto:varshachebolu329@gmail.com">✉ varshachebolu329@gmail.com</a>
+      <a class="pill-link" href="tel:+18609820072">☎ +1 (860) 982-0072</a>
+      <a class="pill-link" href="https://linkedin.com/in/varsha-chebolu-7ba087321" target="_blank" rel="noopener">in/ varsha-chebolu</a>
+      <a class="pill-link" href="#contact">Hartford, CT</a>
+    </div>
+    <div class="ticker-frame">
+      <div class="ticker-head"><span class="dot"></span> live-feed.log — soc-monitoring-lab</div>
+      <div class="ticker-body"><div class="ticker-scroll" id="tickerScroll"></div></div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="sec-head">
+      <span class="sec-num">00</span>
+      <h2 class="sec-title">About</h2>
+      <span class="sec-sub">how i got here</span>
+    </div>
+    <div class="about-text">
+      <p>My path into cybersecurity started on the infrastructure side — configuring routers, switches, and Windows systems as an IT support intern — before moving into research, where I spent three years studying AI security and threat analysis at KL University, co-authoring two peer-reviewed papers (IEEE, IAENG) along the way.</p>
+      <p>Graduate school at the University of New Haven is where that research background turned operational: building SOC environments, triaging real telemetry, reverse-engineering malware samples, and mentoring other students through the same labs as a Teaching Assistant. What draws me to <strong>blue team and DFIR work</strong> specifically is the reconstruction problem — an alert fires, and the job is to work backward through the logs, the process tree, the file artifacts, until the story of what actually happened is airtight enough to act on.</p>
+      <p>The case files below are lab-based rather than production incidents, but I built each one to mirror how a real SOC or forensics team would approach the problem — including the parts that didn't work on the first try.</p>
+    </div>
+  </section>
+
+  <section id="toolset">
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <h2 class="sec-title">Toolset</h2>
+      <span class="sec-sub">technical skills</span>
+    </div>
+    <div class="tool-grid">
+      <div class="tool-card">
+        <h3>SIEM, Detection &amp; Frameworks</h3>
+        <div class="chip-row">
+          <span class="chip">Splunk</span><span class="chip">Microsoft Sentinel</span><span class="chip">Wazuh</span>
+          <span class="chip">Sysmon</span><span class="chip">Threat Hunting</span><span class="chip">Intrusion Detection</span>
+          <span class="chip">MITRE ATT&amp;CK</span><span class="chip">NIST CSF</span><span class="chip">CIS Controls</span><span class="chip">OWASP Top 10</span>
+        </div>
+      </div>
+      <div class="tool-card">
+        <h3>Digital Forensics &amp; Malware</h3>
+        <div class="chip-row">
+          <span class="chip">Autopsy</span><span class="chip">FTK Imager</span><span class="chip">REMnux</span>
+          <span class="chip">FLARE VM</span><span class="chip">PEStudio</span><span class="chip">VirusTotal</span>
+          <span class="chip">Evidence Collection</span><span class="chip">Cyber Threat Intelligence</span>
+        </div>
+      </div>
+      <div class="tool-card">
+        <h3>Identity, Windows &amp; Networking</h3>
+        <div class="chip-row">
+          <span class="chip">Active Directory</span><span class="chip">Entra ID</span><span class="chip">Group Policy</span>
+          <span class="chip">RBAC</span><span class="chip">Windows Server</span><span class="chip">TCP/IP · DNS · SMB · SSH</span>
+          <span class="chip">VPN</span><span class="chip">Wireshark</span><span class="chip">Nmap</span><span class="chip">Nessus</span>
+        </div>
+      </div>
+      <div class="tool-card">
+        <h3>Cloud, Scripting &amp; OS</h3>
+        <div class="chip-row">
+          <span class="chip">Microsoft Azure</span><span class="chip">AWS (IAM, S3, CloudWatch)</span><span class="chip">Cloud Security</span>
+          <span class="chip">PowerShell</span><span class="chip">Python</span><span class="chip">Bash</span>
+          <span class="chip">Kali Linux</span><span class="chip">Ubuntu</span><span class="chip">WSL</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="cases">
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <h2 class="sec-title">Case Files</h2>
+      <span class="sec-sub">applied projects</span>
+    </div>
+
+    <!-- CASE 01 -->
+    <div class="case">
+      <div class="case-top"><span class="id">CASE-01 · SOC-MONITORING</span><span class="sev sev-high">high volume</span></div>
+      <div class="case-body">
+        <h3>SOC Monitoring, Intrusion Detection &amp; Digital Evidence Collection</h3>
+        <p class="case-tagline">Full attack-chain visibility — from first foothold to command and control.</p>
+
+        <div class="case-block">
+          <span class="lbl">Objective</span>
+          <p>Most training labs focus on spotting a single alert. I wanted to practice the harder skill: reconstructing an entire attack chain across nine tactics, from initial access through C2, the way an analyst would during a real incident.</p>
+        </div>
+        <div class="case-block">
+          <span class="lbl">Approach</span>
+          <ol>
+            <li>Deployed Wazuh agents and Sysmon across lab endpoints for process, network, and registry-level telemetry, forwarding everything into Splunk as the central SIEM.</li>
+            <li>Built and tuned correlation searches around specific TTPs (credential dumping, suspicious PowerShell, SMB-based lateral movement) instead of relying on default, noisy alerting.</li>
+            <li>Triaged 150–250 generated alerts by severity, manually validating true vs. false positives and preserving evidence for each confirmed case.</li>
+            <li>Mapped confirmed activity to ~20 MITRE ATT&amp;CK techniques to reconstruct the attack narrative rather than treat each alert in isolation.</li>
+          </ol>
+        </div>
+        <div class="case-block">
+          <span class="lbl">Key challenge</span>
+          <p>Alert volume, not detection, was the real bottleneck — early correlation searches surfaced far more noise than signal. The actual work was building a consistent triage rubric and refining search logic until the alert queue was reviewable rather than overwhelming.</p>
+        </div>
+        <div class="case-block">
+          <span class="lbl">Outcome</span>
+          <p>A documented, evidence-backed timeline for each simulated attack chain, plus a repeatable triage process I could hand off to another analyst.</p>
+        </div>
+        <div class="case-block">
+          <span class="lbl">Skills demonstrated</span>
+          <div class="skills-demo">
+            <span>SIEM correlation design</span><span>Alert triage</span><span>Attack chain reconstruction</span><span>Evidence handling</span>
+          </div>
+        </div>
+        <div class="tactic-tags">
+          <span>Initial Access</span><span>Execution</span><span>Persistence</span><span>Privilege Escalation</span>
+          <span>Defense Evasion</span><span>Credential Access</span><span>Discovery</span><span>Lateral Movement</span><span>C2</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CASE 02 -->
+    <div class="case">
+      <div class="case-top"><span class="id">CASE-02 · DETECTION-ENG</span><span class="sev sev-med">validated</span></div>
+      <div class="case-body">
+        <h3>Detection Engineering &amp; Threat Simulation</h3>
+        <p class="case-tagline">Proving detection coverage instead of assuming it.</p>
+
+        <div class="case-block">
+          <span class="lbl">Objective</span>
+          <p>A detection rule that's never been tested against real technique execution is a guess, not a control. I wanted to validate coverage the way a purple team would — attack first, then check what actually fired.</p>
+        </div>
+        <div class="case-block">
+          <span class="lbl">Approach</span>
+          <ol>
+            <li>Used Atomic Red Team to safely emulate specific techniques across credential access, lateral movement, and privilege escalation in an isolated lab.</li>
+            <li>Authored 20 Sigma rules targeting the underlying behavior of each technique, written to generalize across variants rather than match one specific indicator.</li>
+            <li>Ran 30 Atomic Red Team test cases against the rule set and logged true/false positive results for each.</li>
+            <li>Iterated on rule logic wherever a technique was missed or over-triggered before calling that coverage area validated.</li>
+          </ol>
+        </div>
+        <div class="case-block">
+          <span class="lbl">Key challenge</span>
+          <p>Writing rules in vendor-agnostic Sigma format — rather than hard-coding to one SIEM's query syntax — meant thinking in terms of behavior patterns first and translating second, which is a slower but more durable way to build detection content.</p>
+        </div>
+        <div class="case-block">
+          <span class="lbl">Outcome</span>
+          <p>A documented rule set with pass/fail results per technique, and a repeatable emulation-to-validation workflow.</p>
+        </div>
+        <div class="case-block">
+          <span class="lbl">Skills demonstrated</span>
+          <div class="skills-demo">
+            <span>Detection engineering</span><span>Sigma rule authoring</span><span>Adversary emulation</span><span>Purple-team methodology</span>
+          </div>
+        </div>
+        <div class="tactic-tags"><span>Credential Access</span><span>Lateral Movement</span><span>Privilege Escalation</span></div>
+      </div>
+    </div>
+
+    <!-- CASE 03 -->
+    <div class="case">
+      <div class="case-top"><span class="id">CASE-03 · MALWARE-CTI</span><span class="sev sev-info">analysis</span></div>
+      <div class="case-body">
+        <h3>Malware Analysis &amp; Cyber Threat Intelligence</h3>
+        <p class="case-tagline">From a raw sample to intelligence a SOC can act on.</p>
+
+        <div class="case-block">
+          <span class="lbl">Objective</span>
+          <p>Detection rules and IOCs are only as good as the analysis behind them. I wanted to practice the full pipeline: take an unknown sample and turn it into something a SOC team could actually use for detection tuning.</p>
+        </div>
+        <div class="case-block">
+          <span class="lbl">Approach</span>
+          <ol>
+            <li>Ran initial static analysis (PEStudio, VirusTotal) on 15–20 samples to fingerprint file characteristics, imports, and known signatures before executing anything.</li>
+            <li>Detonated samples in an isolated REMnux/FLARE VM environment to observe runtime behavior — network callbacks, file and registry changes, persistence mechanisms.</li>
+            <li>Extracted IOCs (hashes, IPs/domains, mutexes) and mapped observed behavior to MITRE ATT&amp;CK techniques.</li>
+            <li>Documented findings per sample in a short analysis writeup, formatted the way I'd hand it to a SOC team for detection tuning.</li>
+          </ol>
+        </div>
+        <div class="case-block">
+          <span class="lbl">Key challenge</span>
+          <p>Deciding how deep to go on each sample. Static analysis alone was enough to triage clearly commodity malware, but anything packed or evasive needed full dynamic detonation — learning to make that call quickly was as much a part of the skill as the analysis itself.</p>
+        </div>
+        <div class="case-block">
+          <span class="lbl">Outcome</span>
+          <p>A working malware triage workflow and a consolidated IOC set usable for detection rule tuning.</p>
+        </div>
+        <div class="case-block">
+          <span class="lbl">Skills demonstrated</span>
+          <div class="skills-demo">
+            <span>Static &amp; dynamic analysis</span><span>IOC extraction</span><span>Threat intel reporting</span><span>Safe sandboxing</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CASE 04 -->
+    <div class="case">
+      <div class="case-top"><span class="id">CASE-04 · IDENTITY-SEC</span><span class="sev sev-info">hardening</span></div>
+      <div class="case-body">
+        <h3>Active Directory Security &amp; Identity Management</h3>
+        <p class="case-tagline">Hardening the identity layer attackers actually use.</p>
+
+        <div class="case-block">
+          <span class="lbl">Objective</span>
+          <p>Most attack paths run through identity, not the perimeter. I built and hardened an AD environment from scratch to practice the access-control decisions that usually get skipped in a lab that's just "AD that works."</p>
+        </div>
+        <div class="case-block">
+          <span class="lbl">Approach</span>
+          <ol>
+            <li>Built out Windows Server and Active Directory from scratch, including DNS, DHCP, OU structure, and Group Policy.</li>
+            <li>Applied least-privilege access design through RBAC and GPO rather than defaulting to flat, broad permissions.</li>
+            <li>Used PowerShell to script routine identity management tasks — provisioning, permission audits — instead of doing them manually.</li>
+          </ol>
+        </div>
+        <div class="case-block">
+          <span class="lbl">Key challenge</span>
+          <p>Modeling the OU and permission structure around common AD attack paths — for example, avoiding unnecessary domain admin usage for routine tasks — so the environment reflected real hardening decisions rather than just a functioning directory.</p>
+        </div>
+        <div class="case-block">
+          <span class="lbl">Outcome</span>
+          <p>A hardened AD environment with documented configuration rationale for each major access-control decision.</p>
+        </div>
+        <div class="case-block">
+          <span class="lbl">Skills demonstrated</span>
+          <div class="skills-demo">
+            <span>Identity architecture</span><span>Least-privilege design</span><span>Windows Server admin</span><span>PowerShell scripting</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="sec-head">
+      <span class="sec-num">03</span>
+      <h2 class="sec-title">Experience</h2>
+      <span class="sec-sub">chain of activity</span>
+    </div>
+    <div class="timeline">
+      <div class="t-item">
+        <div class="t-date">JAN 2025 — MAY 2026</div>
+        <div class="t-role">Teaching Assistant</div>
+        <div class="t-org">University of New Haven, West Haven, CT</div>
+        <p class="t-context">Supported the same cybersecurity and digital forensics labs I was building projects in — which meant explaining SIEM and forensic tooling concepts clearly enough for other students to troubleshoot their own environments.</p>
+        <ul>
+          <li>Mentored graduate students in cybersecurity and digital forensics labs, reinforcing incident investigation, intrusion detection, and security tooling skills.</li>
+          <li>Troubleshot Windows and Linux lab environments during hands-on security exercises.</li>
+        </ul>
+      </div>
+      <div class="t-item">
+        <div class="t-date">JUN 2023 — JUL 2023</div>
+        <div class="t-role">Cybersecurity Intern</div>
+        <div class="t-org">AICTE Eduskills (Palo Alto Networks) — Remote, India</div>
+        <ul>
+          <li>Performed security analysis and threat identification through labs on firewall technologies, vulnerability assessment, and incident response.</li>
+          <li>Strengthened knowledge of enterprise security concepts, cloud security, and network traffic inspection.</li>
+        </ul>
+      </div>
+      <div class="t-item">
+        <div class="t-date">MAY 2021 — MAY 2024</div>
+        <div class="t-role">Research Assistant</div>
+        <div class="t-org">KL University, Vijayawada, India</div>
+        <p class="t-context">Three years of research is where the analytical habits behind the case files above actually started — reading adversarial AI behavior closely enough to publish on it.</p>
+        <ul>
+          <li>Conducted cybersecurity research on AI security and cyber threat intelligence, contributing to peer-reviewed IEEE and IAENG publications.</li>
+          <li>Performed vulnerability analysis and documented mitigation strategies for AI-driven security mechanisms.</li>
+        </ul>
+      </div>
+      <div class="t-item">
+        <div class="t-date">JUN 2020 — APR 2021</div>
+        <div class="t-role">IT &amp; Network Support Intern</div>
+        <div class="t-org">Sri Latha Transformers, Andhra Pradesh, India</div>
+        <ul>
+          <li>Configured routers, switches, and LAN connectivity; maintained Windows systems and antivirus management.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="research">
+    <div class="sec-head">
+      <span class="sec-num">04</span>
+      <h2 class="sec-title">Research &amp; Certifications</h2>
+      <span class="sec-sub">publications</span>
+    </div>
+    <div class="pub">
+      <div class="venue">IEEE</div>
+      <h3>Designing Cybersecurity AI Based Awareness Games for Citizens</h3>
+      <p>Gamified AI-driven strategies to improve phishing awareness and cyber hygiene.</p>
+    </div>
+    <div class="pub">
+      <div class="venue">IAENG</div>
+      <h3>Fortifying the Digital Gatekeepers: Cybersecurity Measures for AI in Game Updates</h3>
+      <p>Secure update mechanisms for software supply chain resilience.</p>
+    </div>
+    <div style="height:8px;"></div>
+    <div class="cert-row">
+      <span class="cert">AWS Certified Solutions Architect – Associate</span>
+      <span class="cert">Microsoft Certified: Azure Fundamentals (AZ-900)</span>
+      <span class="cert">AWS Certified Cloud Practitioner</span>
+      <span class="cert">Red Hat Certified Enterprise Application Developer</span>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <div class="foot-grid">
+      <div class="foot-left">
+        <h2>Let's talk SOC &amp; DFIR.</h2>
+        <p>Open to Cyber Analyst, Digital Forensics, and SOC Analyst roles. Based in Hartford, CT — open to remote and relocation.</p>
+      </div>
+      <div class="foot-links">
+        <a href="mailto:varshachebolu329@gmail.com">varshachebolu329@gmail.com</a>
+        <a href="tel:+18609820072">+1 (860) 982-0072</a>
+        <a href="https://linkedin.com/in/varsha-chebolu-7ba087321" target="_blank" rel="noopener">linkedin.com/in/varsha-chebolu</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>VARSHA CHEBOLU // M.S. CYBERSECURITY &amp; NETWORKS, UNIVERSITY OF NEW HAVEN</span>
+      <span>LAST UPDATED 2026</span>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  const logLines = [
+    ['ALERT','T1059 Command and Scripting Interpreter — investigating'],
+    ['INFO','Sigma rule matched: credential dumping attempt'],
+    ['OK','IOC correlated across malware sample set'],
+    ['ALERT','Lateral movement pattern detected — escalating'],
+    ['INFO','Sysmon event ingested — process creation logged'],
+    ['OK','Detection rule validated against Atomic Red Team case'],
+    ['INFO','AD Group Policy change reviewed for access drift'],
+    ['ALERT','Anomalous auth attempt flagged for triage'],
+    ['OK','Case closed — mapped to MITRE ATT&CK T1078'],
+    ['INFO','Wazuh agent heartbeat received — all hosts healthy'],
+  ];
+  function levelClass(l){ if(l==='ALERT') return 'lvl-alert'; if(l==='OK') return 'lvl-ok'; return 'lvl-info'; }
+  function ts(offsetSec){ const d = new Date(Date.now() - offsetSec*1000); return d.toTimeString().slice(0,8); }
+  const container = document.getElementById('tickerScroll');
+  let html = '';
+  for(let rep=0; rep<2; rep++){
+    logLines.forEach((line,i)=>{
+      html += `<div><span class="${levelClass(line[0])}">[${ts((logLines.length-i)*7)}] ${line[0].padEnd(5,' ')}</span> <span class="tag">${line[1]}</span></div>`;
+    });
+  }
+  container.innerHTML = html;
+</script>
+
+</body>
+</html>
